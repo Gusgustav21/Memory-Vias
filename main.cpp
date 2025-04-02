@@ -65,6 +65,8 @@ void porVias(size_t size,char *addr)
     bloques = 4;
     palabras = 1;
 
+    clock_t t1, t2, t3;
+
     string config = "-1";
     while(!isdigit(config[0]) || stoi(config) < 0){
         cout << "Inserta el numero de bloques (escriba 0 para ir a la configuracion predeterminada)\n\n";
@@ -74,8 +76,8 @@ void porVias(size_t size,char *addr)
             cout << "\nValor invalido, intente de nuevo\n\n";
         }
     }
+    system("clear");
     if(stoi(config) != 0){
-        system("clear");
         bloques = stoi(config);
         config = "-1";
         while(!isdigit(config[0]) || stoi(config) < 0){
@@ -91,7 +93,7 @@ void porVias(size_t size,char *addr)
     }
 
     memVias memoria1(bloques,palabras,vias1),  memoria2(bloques,palabras,vias2), memoria3(bloques,palabras,vias3);
-    
+
     ifstream entrada1("ancona_data.csv"), entrada2("ancona_data.csv"), entrada3("ancona_data.csv");
     if(!entrada1.is_open())
     {
@@ -99,6 +101,7 @@ void porVias(size_t size,char *addr)
         return;
     };
     if(entrada1.good() && entrada1.is_open()){
+        t1 = clock();
         while(!entrada1.eof()){
             if(!fetchBoolean){
                 entrada1.get(manualAddress);
@@ -117,6 +120,7 @@ void porVias(size_t size,char *addr)
                 }
             }
         }
+        t1 = clock() - t1;
     }
 
     entrada1.close();
@@ -127,6 +131,7 @@ void porVias(size_t size,char *addr)
         return;
     };
     if(entrada2.good() && entrada2.is_open()){
+        t2 = clock();
         while(!entrada2.eof()){
             if(!fetchBoolean){
                 entrada2.get(manualAddress);
@@ -145,6 +150,7 @@ void porVias(size_t size,char *addr)
                 }
             }
         }
+        t2 = clock() - t2;
     }
 
     entrada2.close();
@@ -155,6 +161,7 @@ void porVias(size_t size,char *addr)
         return;
     };
     if(entrada3.good() && entrada3.is_open()){
+        t3 = clock();
         while(!entrada3.eof()){
             if(!fetchBoolean){
                 entrada3.get(manualAddress);
@@ -173,6 +180,7 @@ void porVias(size_t size,char *addr)
                 }
             }
         }
+        t3 = clock() - t3;
     }
     entrada3.close();
 
@@ -192,9 +200,10 @@ void porVias(size_t size,char *addr)
     cout << "  - Cantidad de bloques: "  << bloques << "\n";
     cout << "  - Total de palabras: " << palabras << "\n";
     cout << "  - Total de vias: " << vias1 << "\n";
-    cout << "  - Total de aciertos: " << aciertos1 << "\n";
-    cout << "  - Total de fallos : " << total1 - aciertos1 << "\n";
-    cout << "  - Total de direcciones: " << total1 << "\n";
+    cout << "  - Total de aciertos: " << (unsigned long int)aciertos1 << "\n";
+    cout << "  - Total de fallos : " << (unsigned long int)(total1 - aciertos1) << "\n";
+    cout << "  - Total de direcciones: " << (unsigned long int)total1 << "\n";
+    cout << "  - Tiempo de ejecución (segundos): " << ((float)t1)/CLOCKS_PER_SEC << "\n";
     cout << "  - El porcentaje de aciertos es de: " << float(aciertos1/total1)*100 << "%\n\n";
     cout << "╚═══════════════════════════════════════════════╝\n\n";
 
@@ -203,9 +212,10 @@ void porVias(size_t size,char *addr)
     cout << "  - Cantidad de bloques: "  << bloques << "\n";
     cout << "  - Total de palabras: " << palabras << "\n";
     cout << "  - Total de vias: " << vias2 << "\n";
-    cout << "  - Total de aciertos: " << aciertos2 << "\n";
-    cout << "  - Total de fallos : " << total2 - aciertos2 << "\n";
-    cout << "  - Total de direcciones: " << total2 << "\n";
+    cout << "  - Total de aciertos: " << (unsigned long int)aciertos2 << "\n";
+    cout << "  - Total de fallos : " << (unsigned long int)(total2 - aciertos2) << "\n";
+    cout << "  - Total de direcciones: " << (unsigned long int)total2 << "\n";
+    cout << "  - Tiempo de ejecución (segundos): " << ((float)t2)/CLOCKS_PER_SEC << "\n";
     cout << "  - El porcentaje de aciertos es de: " << float(aciertos2/total2)*100 << "%\n\n";
     cout << "╚═══════════════════════════════════════════════╝\n\n";
 
@@ -214,9 +224,10 @@ void porVias(size_t size,char *addr)
     cout << "  - Cantidad de bloques: "  << bloques << "\n";
     cout << "  - Total de palabras: " << palabras << "\n";
     cout << "  - Total de vias: " << vias3 << "\n";
-    cout << "  - Total de aciertos: " << aciertos3 << "\n";
-    cout << "  - Total de fallos : " << total3 - aciertos3 << "\n";
-    cout << "  - Total de direcciones: " << total3 << "\n";
+    cout << "  - Total de aciertos: " << (unsigned long int)aciertos3 << "\n";
+    cout << "  - Total de fallos : " << (unsigned long int)(total3 - aciertos3) << "\n";
+    cout << "  - Total de direcciones: " << (unsigned long int)total3 << "\n";
+    cout << "  - Tiempo de ejecución (segundos): " << ((float)t3)/CLOCKS_PER_SEC << "\n";
     cout << "  - El porcentaje de aciertos es de: " << float(aciertos3/total3)*100 << "%\n\n";
     cout << "╚═══════════════════════════════════════════════╝\n\n";
 }
